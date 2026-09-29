@@ -11,18 +11,35 @@ This project directly addresses core quantitative challenges in Low-Income Count
 * **Quantitative Risk Management:** SVR quadratic optimization and deep learning architectures evaluated on risk-adjusted metrics (Sharpe Ratio).
 
 ---
-
 ## 📌 Repository Structure
 
 ```text
 Hybrid-Time-Series-Forecasting/
 │
-├── 📂 Forecasting_MGA_USD_Hybrid/     # HIGH-FREQUENCY / DAILY TRADING MODEL
-│   ├── 📂 data/                        # 2,200+ daily exchange rate observations
-│   ├── 📂 src/                         # Optimization pipelines (SVR, XGBoost, LSTM)
-│   └── main.py                         # Walk-Forward Cross-Validation
+├── Forecasting_MGA_USD_Hybrid/        # HIGH-FREQUENCY / DAILY TRADING MODEL
+│   ├── data/                          # Dataset (2,200+ daily exchange rate observations)
+│   ├── models/                        # Saved trained models
+│   ├── outputs/                       # Generated results and visualizations
+│   │   ├── figures/                   # Comparative plots (e.g., forecast_comparison.png)
+│   │   ├── log/                       # Execution logs
+│   │   ├── results/                   # CSV files (predictions, metrics, walk-forward results)
+│   │   └── tables/                    # Tabular summaries
+│   ├── src/                           # Source code (optimization pipelines, preprocessing)
+│   ├── config.py                      # Configuration and hyperparameters
+│   ├── main.py                        # Main execution script (Walk-Forward Cross-Validation)
+│   └── requirements.txt               # Python project dependencies
 │
-└── 📂 Forecasting_MGA_USD_Macro/      # MULTIVARIATE / MACROECONOMIC MODEL
-    ├── 📂 data/                        # Monthly macro panel (Brent, CPI, Policy Rate, Reserves)
-    ├── 📂 src/                         # Ensemble models & Combinatorial SHAP engine
-    └── main_macro.py                   # Macroeconomic pipeline execution
+└── Forecasting_MGA_USD_Macro/         # MULTIVARIATE / MACROECONOMIC MODEL
+    ├── data/                          # Monthly macro panel (Brent, CPI, Policy Rate, Reserves)
+    ├── models/                        # Saved trained macro models
+    ├── outputs/                       # Generated results and visualizations
+    │   ├── figures/                   # Comparative plots and SHAP visualizations
+    │   └── tables/                    # Tabular summaries
+    ├── src/                           # Source code (Macro pipeline)
+    │   ├── __init__.py                # Package initialization
+    │   ├── step01_macro_data_preparation.py # Data cleaning and feature engineering
+    │   ├── step02_model_training.py   # Model training and optimization
+    │   ├── step03_evaluation.py       # Performance evaluation metrics
+    │   └── step04_economic_interpretation.py # Combinatorial SHAP engine
+    ├── config_macro.py                # Configuration and hyperparameters for macro model
+    └── main_macro.py                  # Macroeconomic pipeline execution
