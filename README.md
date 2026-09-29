@@ -1,7 +1,3 @@
-Je vois exactement le problème sur votre capture d'écran : vous avez collé le texte brut sans le balisage de mise en forme (Markdown), ce qui fait que GitHub l'affiche comme un seul gros bloc de texte sans tableaux ni titres.
-
-Pour obtenir une belle présentation avec des tableaux structurés, des titres et du code propre, copiez l'intégralité du bloc de code ci-dessous et remplacez tout le contenu de votre fichier `README.md` dans VS Code avec celui-ci, puis faites `Ctrl + S` et renvoyez-le sur GitHub.
-
 ```markdown
 # Hybrid Time-Series Forecasting — MGA/USD
 
