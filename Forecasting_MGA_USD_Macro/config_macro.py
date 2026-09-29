@@ -14,10 +14,15 @@ MODELS_DIR = BASE_DIR / "models"
 FIGURES_DIR = BASE_DIR / "outputs" / "figures"
 TABLES_DIR = BASE_DIR / "outputs" / "tables"
 
-# Création automatique des dossiers s'ils n'existent pas
+# Figures SHAP & Prévisions
+SHAP_BAR_PLOT = FIGURES_DIR / "shap_bar_plot.png"
+SHAP_BEESWARM_PLOT = FIGURES_DIR / "shap_beeswarm_plot.png"
+MACRO_FORECAST_PLOT = FIGURES_DIR / "macro_forecast_plot.png"
+
+# Création automatique des dossiers
 for dir_path in [MODELS_DIR, FIGURES_DIR, TABLES_DIR, BASE_DIR / "data" / "processed"]:
     os.makedirs(dir_path, exist_ok=True)
 
 # --- PARAMÈTRES GLOBAUX ---
-TEST_SIZE = 12  # On garde la dernière année (12 mois) pour tester le modèle
+TEST_SIZE = 12
 TARGET_VAR = "mga_usd"
