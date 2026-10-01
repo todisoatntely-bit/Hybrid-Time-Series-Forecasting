@@ -32,21 +32,29 @@ Johansen (VAR(2)) on the monthly panel: no cointegration at 5%. Models use lagge
 - **Expanding-window walk-forward** (252 steps). Light temporal hyperparameter search (SVR, XGBoost). Periodic XGBoost retrain.
 - **Confidence filter:** trade only if $\vert{}\widehat{\Delta y}_t\vert{} \ge \tau$ (grid $\tau \in \{0, 2, 5, 10\}$ Ariary). Transaction cost 0.1% on position changes.
 
-### Out-of-sample results (best threshold per model)
+### Out-of-sample results — RMSE/MAE/Hit Rate: full walk-forward (252 steps, no leakage).
+Sharpe/profit: validation-selected threshold, evaluated on a held-out final test block only.
 
-| Model | RMSE | Hit Rate | Net profit | Sharpe | Best ($\tau$) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **MLP** | 20.25 | 57.7% | +16.4% | 1.56 | 5 |
-| **SVR** | 20.98 | 56.0% | +15.3% | 1.34 | 2 |
-| **LSTM** | 20.06 | 58.1% | +13.1% | 1.09 | 10 |
-| **Ensemble** | 20.39 | 58.5% | +13.0% | 0.99 | 5 |
-| **XGBoost** | 20.64 | 54.0% | +12.0% | 0.77 | 5 |
-| **Random walk** | 21.88 | 0% | 0% | 0 | — |
+| Model        | RMSE  | MAE   | Hit Rate | τ (val.) | Net profit (test) | Sharpe (test) |
+|--------------|-------|-------|----------|----------|--------------------|---------------|
+| LSTM         | 20.06 | 13.44 | 58.1%    | 5        | +4.0%              | -0.58         |
+| SVR          | 20.98 | 13.77 | 56.1%    | 2        | +4.7%              | -0.38         |
+| MLP          | 20.25 | 13.64 | 57.7%    | 2        | +2.1%              | -0.89         |
+| Ensemble     | 20.39 | 13.64 | 58.5%    | 2        | +1.0%              | -1.30         |
+| XGBoost      | 20.64 | 13.86 | 54.0%    | 5        | +2.7%              | -1.03         |
+| Random walk  | 21.88 | 13.72 | 0%       | —        | 0%                 | 0.00          |
 
-> RMSE gains vs the random walk are modest (Meese–Rogoff still bites). Economic value appears after the confidence filter: without it, Sharpes stay close to 0.3–0.5.
-> **Retained specification:** MLP + ($\tau = 5$) Ariary.
+Validation block: 63 obs (2025-07-30 → 2025-10-24), used only to pick τ per model.
+Final test block: 189 obs (2025-10-27 → 2026-07-16), used only for the metrics above.
 
----
+- RMSE gains vs the random walk hold up out-of-sample (Meese–Rogoff still bites, but less).
+- Economic value does **not** survive an out-of-sample threshold: validation Sharpes
+  reached 3.96–5.01 with the same thresholds, but collapse once applied to the final
+  test block. This gap is itself a core finding — it quantifies the cost of
+  look-ahead bias in threshold selection, a methodological pitfall that is easy to
+  miss and common in retail/academic backtests.
+- No specification is "retained" on Sharpe grounds; the dissociation between
+  statistical and economic performance is the result.
 
 ## Volet 2 — Monthly macro + SHAP
 
